@@ -4,6 +4,8 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
+import au.com.myob.payslip.fixture.EmployeeSalaryRecordFixture;
+
 /**
  * Test class for EmployeeSalaryRecord
  */
@@ -16,15 +18,7 @@ public class EmployeeSalaryRecordTest {
 	 */
 	@Test
 	public void whenAllParametersProvidedThenObjectShouldReturn() {
-		//Given all parameters provided
-		String firstName = "David";
-		String lastName = "Rudd";
-		String annualSalary = "60050";
-		String superRate = "9%";
-		String payPeriod = "01 March - 31 March";
-		//When the constructor called
-		EmployeeSalaryRecord record = new EmployeeSalaryRecord(firstName,
-				lastName, annualSalary, superRate, payPeriod);
+		EmployeeSalaryRecord record = EmployeeSalaryRecordFixture.getDefaultRecord();
 		//Then object should return
 		assertNotNull(record);
 	}
