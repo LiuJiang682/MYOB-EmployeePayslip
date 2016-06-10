@@ -409,7 +409,7 @@ public class EmployeePayslipTest {
 	@Test
 	public void whenAListofPayRecordProvidenThenwriteToFileReal() throws Exception {
 		Path path = null;
-//		try {
+		try {
 			// Given a null list of pay records
 			List<EmployeeMonthlyPayRecord> payRecords = EmployeeMonthlyPayRecordFixture
 					.get2EmployeeMonthlyPayRecordList();
@@ -423,10 +423,10 @@ public class EmployeePayslipTest {
 			assertNotNull(retrieved);
 			assertTrue(2 == retrieved.size());
 			assertEquals(record.toString().trim(), retrieved.get(0).toString().trim());
-//		} finally {
-//			if (null != path)
-//				Files.delete(path);
-//		}
+		} finally {
+			if (null != path)
+				Files.delete(path);
+		}
 	}
 
 	private EmployeePayslip givenEmployeePayslip() {
