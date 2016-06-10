@@ -28,7 +28,7 @@ public class EmployeeSalaryRecordFixture {
 	public static EmployeeSalaryRecord get80000Record() {
 		// Given all parameters provided
 		String annualSalary = "80000";
-		
+
 		// When the constructor called
 		EmployeeSalaryRecord record = new EmployeeSalaryRecord(firstName, lastName, annualSalary, superRate, payPeriod);
 		return record;
@@ -36,9 +36,23 @@ public class EmployeeSalaryRecordFixture {
 
 	public static EmployeeSalaryRecord get37000Record() {
 		// Given all parameters provided
-		
+
 		annualSalary = "37000";
-		
+
+		// When the constructor called
+		EmployeeSalaryRecord record = new EmployeeSalaryRecord(firstName, lastName, annualSalary, superRate, payPeriod);
+		return record;
+	}
+
+	public static EmployeeSalaryRecord get180000Record() {
+		annualSalary = "180000";
+		// When the constructor called
+		EmployeeSalaryRecord record = new EmployeeSalaryRecord(firstName, lastName, annualSalary, superRate, payPeriod);
+		return record;
+	}
+
+	public static EmployeeSalaryRecord get280000Record() {
+		annualSalary = "280000";
 		// When the constructor called
 		EmployeeSalaryRecord record = new EmployeeSalaryRecord(firstName, lastName, annualSalary, superRate, payPeriod);
 		return record;
@@ -50,5 +64,19 @@ public class EmployeeSalaryRecordFixture {
 		superRate = "9%";
 		payPeriod = "01 March - 31 March";
 		annualSalary = "60050";
+	}
+
+	public static EmployeeSalaryRecord getNoSuperRateRecord() {
+		superRate = null;
+		// When the constructor called
+		EmployeeSalaryRecord record = new EmployeeSalaryRecord(firstName, lastName, annualSalary, superRate, payPeriod);
+		return record;
+	}
+
+	public static EmployeeSalaryRecord getSuperNoSignRecord() {
+		superRate = "9";
+		// When the constructor called
+		EmployeeSalaryRecord record = new EmployeeSalaryRecord(firstName, lastName, annualSalary, superRate, payPeriod);
+		return record;
 	}
 }

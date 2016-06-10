@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 import au.com.myob.payslip.model.EmployeeMonthlyPayRecord;
@@ -18,8 +19,10 @@ public class OutputWriter {
 
 	public void write(List<EmployeeMonthlyPayRecord> records) throws IOException {
 		Path path = Paths.get(this.outputFileName);
+		Files.deleteIfExists(path);
+		Files.createFile(path);
 		for (EmployeeMonthlyPayRecord record : records) {
-			Files.write(path, record.toString().getBytes());
+			Files.write(path, record.toString().getBytes(), StandardOpenOption.APPEND);
 		}
 	}
 

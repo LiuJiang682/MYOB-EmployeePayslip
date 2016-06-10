@@ -1,22 +1,64 @@
 package au.com.myob.payslip.calcuation;
 
 import java.math.BigDecimal;
-import java.util.OptionalLong;
-import java.util.stream.LongStream;
 
+import org.apache.commons.lang3.StringUtils;
+
+import au.com.myob.payslip.comm.Constants.Numeral;
 import au.com.myob.payslip.model.EmployeeMonthlyPayRecord;
 import au.com.myob.payslip.model.EmployeeSalaryRecord;
 
 public class MonthlyPayCalculator {
 
-	private static final int FIRST_LEVEL = 18200;
+	
+	private static final String EMPTY = "";
+	private static final String PERCENTAGE_SIGN = "%";
+	private static final BigDecimal ONE_HUNDRED = new BigDecimal(100);
+	private static final BigDecimal FOURTH_LEVEL_TAX_AMOUNT = new BigDecimal(54547);
+	private static final BigDecimal FIFTH_LEVEL_TAX_RATE = new BigDecimal(0.45);
+	private static final BigDecimal THIRD_LEVEL_TAX_AMOUNT = new BigDecimal(17547);
+	private static final BigDecimal FOURTH_LEVEL_TAX_RATE = new BigDecimal(0.37);
+	private static final BigDecimal SECOND_LEVEL_TAX_AMOUNT = new BigDecimal(3572);
+	private static final BigDecimal THIRD_LEVEL_TAX_RATE = new BigDecimal(0.325);
+	private static final BigDecimal SECOND_LEVEL_TAX_RATE = new BigDecimal(0.19);
 	private static final BigDecimal MONTHS = new BigDecimal(12);
+	private static final int FOURTH_LEVEL_END = 180000;
+	private static final int FOURTH_LEVEL_START = 80001;
+	private static final int THIRD_LEVEL_END = 80000;
+	private static final int THIRD_LEVEL_START = 37001;
+	private static final int SECOND_LEVEL_END = 37000;
+	private static final int SECOND_LEVEL_START = 18201;
+	private static final int FIRST_LEVEL = 18200;
+
 
 	public static EmployeeMonthlyPayRecord doCalculation(EmployeeSalaryRecord salaryRecord) {
 		String name = getName(salaryRecord);
 		String grossIncome = getGrossIncome(salaryRecord);
+		String incomeTax = getIncomeTax(salaryRecord);
+		String netIncome = getNetIncome(grossIncome, incomeTax);
+		String superContribution = getSuper(grossIncome, salaryRecord);
 		
-		return null;
+		return new EmployeeMonthlyPayRecord(name, salaryRecord.getPayPeriod(),
+				grossIncome, incomeTax, netIncome, superContribution);
+	}
+
+	public static String getNetIncome(String grossIncomeString, String incomeTaxString) {
+		long netIncome = Numeral.ZERO;
+		
+		try {
+			long grossIncome = Long.parseLong(grossIncomeString);
+			long incomeTax = Long.parseLong(incomeTaxString);
+			netIncome = grossIncome - incomeTax;
+			if (netIncome < Numeral.ZERO) {
+				//Negative net income
+				netIncome = Numeral.ZERO;
+			}
+		}
+		catch (Exception e) {
+			//Ignore the exception 
+			//Leave the net income as ZERO.
+		}
+		return String.valueOf(netIncome);
 	}
 
 	public static String getName(EmployeeSalaryRecord salaryRecord) {
@@ -28,7 +70,7 @@ public class MonthlyPayCalculator {
 
 	public static String getGrossIncome(EmployeeSalaryRecord salaryRecord) {
 		BigDecimal salary = new BigDecimal(salaryRecord.getAnnualSalary());
-		BigDecimal grossIncome = salary.divide(MONTHS, BigDecimal.ROUND_HALF_UP);
+		BigDecimal grossIncome = salary.divide(MONTHS, Numeral.ZERO, BigDecimal.ROUND_HALF_UP).setScale(Numeral.ZERO, BigDecimal.ROUND_HALF_UP);
 		return grossIncome.toString();
 	}
 
@@ -39,21 +81,84 @@ public class MonthlyPayCalculator {
 			if (isInSecondLevel(salary)) {
 				incomeTax = doSecondLevelIncomeTaxCalculation(salary);
 			}
+			else if(isInThirdLevel(salary)) {
+				incomeTax = doThirdLevelIncomeTaxCalculation(salary);
+			}
+			else if(isInFourthLevel(salary)){
+				incomeTax = doFourthLevelIncomeTaxCalculation(salary);
+			}
+			else {
+				incomeTax = doFifthLevelIncomeTaxCalculation(salary);
+			}
 		}
 		return String.valueOf(incomeTax);
 	}
 
 	public static long doSecondLevelIncomeTaxCalculation(long salary) {
 		BigDecimal taxable = new BigDecimal(salary - FIRST_LEVEL);
-		BigDecimal totalIncomeTax = taxable.multiply(new BigDecimal(0.19));
-		BigDecimal incomeTax = totalIncomeTax.divide(MONTHS, BigDecimal.ROUND_HALF_UP);
+		BigDecimal totalIncomeTax = taxable.multiply(SECOND_LEVEL_TAX_RATE);
+		BigDecimal incomeTax = totalIncomeTax.divide(MONTHS, Numeral.ZERO, BigDecimal.ROUND_HALF_UP).setScale(Numeral.ZERO, BigDecimal.ROUND_HALF_UP);
 		return incomeTax.longValue();
 	}
 
 	public static boolean isInSecondLevel(long salary) {
-		OptionalLong containsValue = LongStream.rangeClosed(18201, 37000)
-	            .filter(p -> p == salary).findAny();
-		return containsValue.isPresent() ? true : false;
+		return (SECOND_LEVEL_START <= salary) && (salary <= SECOND_LEVEL_END);
+	}
+
+	public static boolean isInThirdLevel(long salary) {
+		return (THIRD_LEVEL_START <= salary) && (salary <= THIRD_LEVEL_END);
+	}
+
+	public static long doThirdLevelIncomeTaxCalculation(long salary) {
+		BigDecimal taxable = new BigDecimal(salary - SECOND_LEVEL_END);
+		BigDecimal thirdLevelIncomeTax = taxable.multiply(THIRD_LEVEL_TAX_RATE);
+		BigDecimal totalIncomeTax = thirdLevelIncomeTax.add(SECOND_LEVEL_TAX_AMOUNT);
+		BigDecimal incomeTax = totalIncomeTax.divide(MONTHS, Numeral.ZERO, BigDecimal.ROUND_HALF_UP).setScale(Numeral.ZERO, BigDecimal.ROUND_HALF_UP);
+		return incomeTax.longValue();
+	}
+
+	public static boolean isInFourthLevel(long salary) {
+		return (FOURTH_LEVEL_START <= salary) && (salary <= FOURTH_LEVEL_END);
+	}
+
+	public static long doFourthLevelIncomeTaxCalculation(long salary) {
+		BigDecimal taxable = new BigDecimal(salary - THIRD_LEVEL_END);
+		BigDecimal fourthLevelIncomeTax = taxable.multiply(FOURTH_LEVEL_TAX_RATE);
+		BigDecimal totalIncomeTax = fourthLevelIncomeTax.add(THIRD_LEVEL_TAX_AMOUNT);
+		BigDecimal incomeTax = totalIncomeTax.divide(MONTHS, Numeral.ZERO, BigDecimal.ROUND_HALF_UP).setScale(Numeral.ZERO, BigDecimal.ROUND_HALF_UP);
+		return incomeTax.longValue();
+	}
+
+	public static long doFifthLevelIncomeTaxCalculation(long salary) {
+		BigDecimal taxable = new BigDecimal(salary - FOURTH_LEVEL_END);
+		BigDecimal fifthLevelIncomeTax = taxable.multiply(FIFTH_LEVEL_TAX_RATE);
+		BigDecimal totalIncomeTax = fifthLevelIncomeTax.add(FOURTH_LEVEL_TAX_AMOUNT);
+		BigDecimal incomeTax = totalIncomeTax.divide(MONTHS, Numeral.ZERO, BigDecimal.ROUND_HALF_UP).setScale(Numeral.ZERO, BigDecimal.ROUND_HALF_UP);
+		return incomeTax.longValue();
+	}
+
+	public static String getSuper(String grossIncomeString, EmployeeSalaryRecord salaryRecord) {
+		BigDecimal superContribution = BigDecimal.ZERO;
+		
+		try {
+//			long grossIncome = Long.parseLong(grossIncomeString);
+			String superRateString = salaryRecord.getSuperRate();
+			if (StringUtils.isNoneBlank(superRateString)) {
+				superRateString = superRateString.trim();
+				if (superRateString.endsWith(PERCENTAGE_SIGN)) {
+					superRateString = superRateString.replace(PERCENTAGE_SIGN, EMPTY);
+				}
+				BigDecimal superRate = new BigDecimal(superRateString);
+				superRate = superRate.divide(ONE_HUNDRED);
+				BigDecimal grossIncome = new BigDecimal(grossIncomeString);
+				superContribution = grossIncome.multiply(superRate).setScale(Numeral.TWO, BigDecimal.ROUND_HALF_UP);
+			}
+		}
+		catch (Exception e) {
+			//Ignore exception and let super contribution as ZERO
+		}
+		
+		return superContribution.toString();
 	}
 
 }

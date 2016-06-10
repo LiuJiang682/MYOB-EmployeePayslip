@@ -9,6 +9,7 @@ import org.apache.commons.collections.CollectionUtils;
 import au.com.myob.payslip.calcuation.MonthlyPayCalculator;
 import au.com.myob.payslip.comm.Constants.Numeral;
 import au.com.myob.payslip.io.InputReader;
+import au.com.myob.payslip.io.OutputWriter;
 import au.com.myob.payslip.model.EmployeeMonthlyPayRecord;
 import au.com.myob.payslip.model.EmployeeSalaryRecord;
 
@@ -42,12 +43,20 @@ public class EmployeePayslip {
 		try {
 			List<EmployeeSalaryRecord> inputs = getInputContents();
 			List<EmployeeMonthlyPayRecord> records = doPayCalculation(inputs);
+			writeToFile(records);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 	}
 	
+	protected void writeToFile(List<EmployeeMonthlyPayRecord> records) throws IOException {
+		if (CollectionUtils.isNotEmpty(records)) {
+			OutputWriter writer = new OutputWriter(this.outputFileName);
+			writer.write(records);
+		}
+	}
+
 	protected List<EmployeeMonthlyPayRecord> doPayCalculation(List<EmployeeSalaryRecord> inputs) {
 		List<EmployeeMonthlyPayRecord> payRecords = new ArrayList<>();
 		if (CollectionUtils.isNotEmpty(inputs)) {

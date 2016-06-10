@@ -13,6 +13,9 @@ public class EmployeeMonthlyPayRecord implements Serializable {
 	 */
 	private static final long serialVersionUID = -3006817405466575335L;
 
+	private static final Object LINE_SEPARATOR = System.getProperty("line.separator");
+	private static final String DELIM = ",";
+
 	private String name;
 	private String payPeriod;
 	private String grossIncome;
@@ -65,6 +68,18 @@ public class EmployeeMonthlyPayRecord implements Serializable {
 	}
 	
 	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
+		StringBuilder buf = new StringBuilder(name);
+		buf.append(DELIM);
+		buf.append(payPeriod);
+		buf.append(DELIM);
+		buf.append(grossIncome);
+		buf.append(DELIM);
+		buf.append(incomeTax);
+		buf.append(DELIM);
+		buf.append(netIncome);
+		buf.append(DELIM);
+		buf.append(superContribution);
+		buf.append(LINE_SEPARATOR);
+		return buf.toString();
 	}
 }

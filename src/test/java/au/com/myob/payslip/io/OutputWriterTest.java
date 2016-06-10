@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
@@ -47,9 +46,9 @@ public class OutputWriterTest {
 		try {
 			// Given the writer
 			OutputWriter writer = givenWriter();
-			EmployeeMonthlyPayRecord record = EmployeeMonthlyPayRecordFixture.getDefaultEmployeeMonthlyPayRecord();
-			List<EmployeeMonthlyPayRecord> records = new ArrayList<>();
-			records.add(record);
+			List<EmployeeMonthlyPayRecord> records = EmployeeMonthlyPayRecordFixture.getEmployeeMonthlyPayRecordList();
+			EmployeeMonthlyPayRecord record = records.get(0);
+			
 			// When the write method called
 			writer.write(records);
 			// Then the file should populated
@@ -57,13 +56,13 @@ public class OutputWriterTest {
 			List<String> retrieved = Files.readAllLines(path);
 			assertNotNull(retrieved);
 			assertTrue(1 == retrieved.size());
-			assertEquals(record.toString(), retrieved.get(0).toString());
+			assertEquals(record.toString().trim(), retrieved.get(0).toString().trim());
 		} finally {
 			if (null != path)
 				Files.delete(path);
 		}
 	}
-
+	
 	private OutputWriter givenWriter() {
 		// Given the output file name
 		String outputFile = TEST_OUTPUT_FILE;
