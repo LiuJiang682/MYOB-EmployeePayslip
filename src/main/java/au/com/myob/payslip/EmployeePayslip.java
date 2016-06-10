@@ -10,6 +10,7 @@ import au.com.myob.payslip.model.EmployeeSalaryRecord;
 public class EmployeePayslip {
 
 	private static final String HELP = "h";
+
 	public static final String DEFAULT_RECORD_SIZE = "6000";
 	public static final String DEFAULT_OUTPUT_FILE = "src/test/resources/outputFile.csv";
 	public static final String DEFAULT_INPUT_FILE = "src/test/resources/inputFile.csv";
@@ -86,7 +87,5 @@ public class EmployeePayslip {
 	public int getRecordSize() {
 		return this.recordSize;
 	}
-
-	
 
 }

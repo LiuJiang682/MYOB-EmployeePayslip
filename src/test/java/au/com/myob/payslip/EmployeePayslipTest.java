@@ -297,4 +297,5 @@ public class EmployeePayslipTest {
 		EmployeePayslip payslip =new EmployeePayslip(EmployeePayslip.DEFAULT_INPUT_FILE, TEST_OUTPUT_FILE, TEST_RECORD_SIZE);
 		return payslip;
 	}
+
 }
