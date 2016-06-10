@@ -1,10 +1,15 @@
 package au.com.myob.payslip;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+
+import au.com.myob.payslip.calcuation.MonthlyPayCalculator;
 import au.com.myob.payslip.comm.Constants.Numeral;
 import au.com.myob.payslip.io.InputReader;
+import au.com.myob.payslip.model.EmployeeMonthlyPayRecord;
 import au.com.myob.payslip.model.EmployeeSalaryRecord;
 
 public class EmployeePayslip {
@@ -36,12 +41,24 @@ public class EmployeePayslip {
 	protected void run() {
 		try {
 			List<EmployeeSalaryRecord> inputs = getInputContents();
+			List<EmployeeMonthlyPayRecord> records = doPayCalculation(inputs);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 	}
 	
+	protected List<EmployeeMonthlyPayRecord> doPayCalculation(List<EmployeeSalaryRecord> inputs) {
+		List<EmployeeMonthlyPayRecord> payRecords = new ArrayList<>();
+		if (CollectionUtils.isNotEmpty(inputs)) {
+			for (EmployeeSalaryRecord input:  inputs) {
+				payRecords.add(MonthlyPayCalculator.doCalculation(input));
+			}
+		}
+		
+		return payRecords;
+	}
+
 	protected List<EmployeeSalaryRecord> getInputContents() throws IOException {
 		InputReader inputReader = new InputReader(this.inputFileName, this.recordSize);
 		return inputReader.read();

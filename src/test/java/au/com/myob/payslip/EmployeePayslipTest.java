@@ -5,12 +5,12 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.powermock.api.mockito.PowerMockito.verifyNew;
-import static org.powermock.api.mockito.PowerMockito.whenNew;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -22,6 +22,9 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import au.com.myob.payslip.comm.Constants.Numeral;
+import au.com.myob.payslip.fixture.EmployeeSalaryRecordFixture;
+import au.com.myob.payslip.model.EmployeeMonthlyPayRecord;
 import au.com.myob.payslip.model.EmployeeSalaryRecord;
 
 /**
@@ -291,6 +294,60 @@ public class EmployeePayslipTest {
 		assertNotNull(contents);
 		assertTrue(2 == contents.size());
 		
+	}
+	
+	/**
+	 * Given a list of salary records
+	 * When the doPayCalculation method called
+	 * Then a list of the monthly pay records should return
+	 */
+	@Test
+	public void whenListOfSalaryRecordProvidenThenListPayRecordShouldReturn() {
+		//Given a list of salary records
+		List<EmployeeSalaryRecord> salaryRecords = new ArrayList<>();
+		EmployeeSalaryRecord salaryRecord = EmployeeSalaryRecordFixture.getDefaultRecord();
+		salaryRecords.add(salaryRecord);
+		EmployeePayslip employeePayslip = givenEmployeePayslip();
+		//When the doPayCalculation method called
+		List<EmployeeMonthlyPayRecord> payRecords = employeePayslip.doPayCalculation(salaryRecords);
+		//Then the list should return
+		assertNotNull(payRecords);
+		assertFalse(payRecords.isEmpty());
+		assertTrue(null != payRecords.get(Numeral.ZERO));
+	}
+	
+	/**
+	 * Given an empty list of salary records
+	 * When the doPayCalculation method called
+	 * Then an empty list of the monthly pay records should return
+	 */
+	@Test
+	public void whenEmptyListOfSalaryRecordProvidenThenEmptyListPayRecordShouldReturn() {
+		//Given a list of salary records
+		List<EmployeeSalaryRecord> salaryRecords = new ArrayList<>();
+		EmployeePayslip employeePayslip = givenEmployeePayslip();
+		//When the doPayCalculation method called
+		List<EmployeeMonthlyPayRecord> payRecords = employeePayslip.doPayCalculation(salaryRecords);
+		//Then the list should return
+		assertNotNull(payRecords);
+		assertTrue(payRecords.isEmpty());
+	}
+	
+	/**
+	 * Given an null list of salary records
+	 * When the doPayCalculation method called
+	 * Then an empty list of the monthly pay records should return
+	 */
+	@Test
+	public void whenNullListOfSalaryRecordProvidenThenEmptyListPayRecordShouldReturn() {
+		//Given a list of salary records
+		List<EmployeeSalaryRecord> salaryRecords = null;
+		EmployeePayslip employeePayslip = givenEmployeePayslip();
+		//When the doPayCalculation method called
+		List<EmployeeMonthlyPayRecord> payRecords = employeePayslip.doPayCalculation(salaryRecords);
+		//Then the list should return
+		assertNotNull(payRecords);
+		assertTrue(payRecords.isEmpty());
 	}
 
 	private EmployeePayslip givenEmployeePayslip() {
