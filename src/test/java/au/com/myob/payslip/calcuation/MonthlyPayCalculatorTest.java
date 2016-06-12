@@ -25,8 +25,9 @@ public class MonthlyPayCalculatorTest {
 	private static final String DEFAULT_SUPER_CONTRIBUTION = "450.36";
 
 	/**
-	 * Give a salary record of 60050 When the doCalculation method called Then
-	 * the correct pay record will return
+	 * Give a salary record of 60050 
+	 * When the doCalculation method called 
+	 * Then the correct pay record will return
 	 */
 	@Test
 	public void whenSixtyThousandIncomeProvidedThenCorrectRecordShouldReturn() {
@@ -39,8 +40,9 @@ public class MonthlyPayCalculatorTest {
 	}
 
 	/**
-	 * Given a salary record When the getName method called Then a string with
-	 * "firstName lastName" format should return
+	 * Given a salary record 
+	 * When the getName method called 
+	 * Then a string with "firstName lastName" format should return
 	 */
 	@Test
 	public void whenASalaryRecordProvideThenANameShouldBeReturn() {
@@ -54,8 +56,9 @@ public class MonthlyPayCalculatorTest {
 	}
 
 	/**
-	 * Given a salary record When the getGrossIncome method called Then a string
-	 * with gross income should return
+	 * Given a salary record 
+	 * When the getGrossIncome method called 
+	 * Then a string with gross income should return
 	 */
 	@Test
 	public void whenASalaryRecordProvideThenGrossIncomeShouldBeReturn() {
@@ -69,8 +72,9 @@ public class MonthlyPayCalculatorTest {
 	}
 
 	/**
-	 * Given a salary record When the getIncomeTax method called Then a string
-	 * with income tax should return
+	 * Given a salary record 
+	 * When the getIncomeTax method called 
+	 * Then a string with income tax should return
 	 */
 	@Test
 	public void whenASalaryRecordProvideThenIncomeTaxShouldBeReturn() {
@@ -84,8 +88,9 @@ public class MonthlyPayCalculatorTest {
 	}
 
 	/**
-	 * Given a 18200 salary record When the getIncomeTax method called Then a
-	 * string with income tax should return
+	 * Given a 18200 salary record 
+	 * When the getIncomeTax method called 
+	 * Then a string with income tax should return
 	 */
 	@Test
 	public void whenA18200SalaryRecordProvideThenIncomeTaxShouldBeReturn() {
@@ -99,8 +104,9 @@ public class MonthlyPayCalculatorTest {
 	}
 
 	/**
-	 * Given a 37000 salary record When the getIncomeTax method called Then a
-	 * string with income tax should return
+	 * Given a 37000 salary record 
+	 * When the getIncomeTax method called 
+	 * Then a string with income tax should return
 	 * 
 	 * @throws Exception
 	 */
@@ -122,8 +128,9 @@ public class MonthlyPayCalculatorTest {
 	}
 
 	/**
-	 * Given a 80000 salary record When the getIncomeTax method called Then a
-	 * string with income tax should return
+	 * Given a 80000 salary record 
+	 * When the getIncomeTax method called 
+	 * Then a string with income tax should return
 	 * 
 	 * @throws Exception
 	 */
@@ -145,8 +152,9 @@ public class MonthlyPayCalculatorTest {
 	}
 
 	/**
-	 * Given a 180000 salary record When the getIncomeTax method called Then a
-	 * string with income tax should return
+	 * Given a 180000 salary record 
+	 * When the getIncomeTax method called 
+	 * Then a string with income tax should return
 	 * 
 	 * @throws Exception
 	 */
@@ -168,8 +176,9 @@ public class MonthlyPayCalculatorTest {
 	}
 
 	/**
-	 * Given a 37000 salary record When the isInSecondLevel method called Then
-	 * true should return
+	 * Given a 37000 salary record 
+	 * When the isInSecondLevel method called 
+	 * Then true should return
 	 */
 	@Test
 	public void whenA37000SalaryRecordProvideThenTrueShouldBeReturn() {
@@ -183,8 +192,9 @@ public class MonthlyPayCalculatorTest {
 	}
 
 	/**
-	 * Given a 37000 salary record When the doSecondLevelIncomeTaxCalculation
-	 * method called Then 298 should return
+	 * Given a 37000 salary record 
+	 * When the doSecondLevelIncomeTaxCalculation method called 
+	 * Then 298 should return
 	 */
 	@Test
 	public void whenA37000SalaryRecordProvideThen298ShouldReturn() {
@@ -198,8 +208,9 @@ public class MonthlyPayCalculatorTest {
 	}
 
 	/**
-	 * Given a 37000 salary record When the isInSecondLevel method called Then
-	 * true should return
+	 * Given a 37000 salary record 
+	 * When the isInSecondLevel method called 
+	 * Then true should return
 	 */
 	@Test
 	public void whenA80000SalaryRecordProvideThenTrueShouldBeReturn() {
@@ -213,8 +224,9 @@ public class MonthlyPayCalculatorTest {
 	}
 
 	/**
-	 * Given a 80000 salary record When the doThirdLevelIncomeTaxCalculation
-	 * method called Then 1462 should return
+	 * Given a 80000 salary record 
+	 * When the doThirdLevelIncomeTaxCalculation method called 
+	 * Then 1462 should return
 	 */
 	@Test
 	public void whenA37000SalaryRecordProvideThen1462ShouldReturn() {
@@ -228,8 +240,9 @@ public class MonthlyPayCalculatorTest {
 	}
 
 	/**
-	 * Given a 180000 salary record When the isInFourthLevel method called Then
-	 * true should return
+	 * Given a 180000 salary record 
+	 * When the isInFourthLevel method called 
+	 * Then true should return
 	 */
 	@Test
 	public void whenA180000SalaryRecordProvideThenTrueShouldBeReturn() {
@@ -243,8 +256,9 @@ public class MonthlyPayCalculatorTest {
 	}
 
 	/**
-	 * Given a 180000 salary record When the doFourthLevelIncomeTaxCalculation
-	 * method called Then 4546 should return
+	 * Given a 180000 salary record 
+	 * When the doFourthLevelIncomeTaxCalculation method called 
+	 * Then 4546 should return
 	 */
 	@Test
 	public void whenA180000SalaryRecordProvideThen4546ShouldReturn() {
@@ -258,8 +272,9 @@ public class MonthlyPayCalculatorTest {
 	}
 
 	/**
-	 * Given a 280000 salary record When the doFourthLevelIncomeTaxCalculation
-	 * method called Then 4546 should return
+	 * Given a 280000 salary record 
+	 * When the doFourthLevelIncomeTaxCalculation method called 
+	 * Then 4546 should return
 	 */
 	@Test
 	public void whenA280000SalaryRecordProvideThen8296ShouldReturn() {
@@ -273,8 +288,9 @@ public class MonthlyPayCalculatorTest {
 	}
 
 	/**
-	 * Given a 280000 salary record When the getIncomeTax method called Then a
-	 * string with income tax should return
+	 * Given a 280000 salary record 
+	 * When the getIncomeTax method called 
+	 * Then a string with income tax should return
 	 * 
 	 * @throws Exception
 	 */
@@ -295,8 +311,9 @@ public class MonthlyPayCalculatorTest {
 	}
 
 	/**
-	 * Given a gross income 5004 and income tax 922 When the getNetincome method
-	 * called Then 4082 return
+	 * Given a gross income 5004 and income tax 922 
+	 * When the getNetincome method called 
+	 * Then 4082 return
 	 */
 	@Test
 	public void whenGrossIncomeNIncomeTaxProvidedThenNetincomeShouldReturn() {
@@ -310,8 +327,9 @@ public class MonthlyPayCalculatorTest {
 	}
 
 	/**
-	 * Given a gross income 5004 and income tax 922 When the getNetincome method
-	 * called in wrong order of parameters Then 0 return
+	 * Given a gross income 5004 and income tax 922 
+	 * When the getNetincome method called in wrong order of parameters 
+	 * Then 0 return
 	 */
 	@Test
 	public void whenGrossIncomeNIncomeTaxProvidedInWrongOrderThenNetincomeShouldReturnZERO() {
@@ -325,8 +343,9 @@ public class MonthlyPayCalculatorTest {
 	}
 
 	/**
-	 * Given a gross income 5004 and income tax 922 When the getNetincome method
-	 * called in wrong order of parameters Then 0 return
+	 * Given a gross income 5004a and income tax 922 
+	 * When the getNetincome method called in wrong order of parameters 
+	 * Then 0 return
 	 */
 	@Test
 	public void whenGrossIncomeNIncomeTaxProvidedInvalidThenNetincomeShouldReturnZERO() {
@@ -340,7 +359,8 @@ public class MonthlyPayCalculatorTest {
 	}
 
 	/**
-	 * Given a gross income and salary record When the getSuper method called
+	 * Given a gross income and salary record 
+	 * When the getSuper method called
 	 * Then a string return
 	 */
 	@Test
@@ -358,7 +378,7 @@ public class MonthlyPayCalculatorTest {
 	/**
 	 * Given a gross income and salary record with No super rate 
 	 * When the getSuper method called
-	 * Then a string return
+	 * Then a 0 string return
 	 */
 	@Test
 	public void whenNoSuperRateProvidedThenZeroSuperReturn() {

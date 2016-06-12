@@ -13,6 +13,10 @@ import au.com.myob.payslip.io.OutputWriter;
 import au.com.myob.payslip.model.EmployeeMonthlyPayRecord;
 import au.com.myob.payslip.model.EmployeeSalaryRecord;
 
+/**
+ * The main class for MYOB code exercise of employee monthly pay slip.
+ * For the detail requirements of this program, please read the README.md.
+ */
 public class EmployeePayslip {
 
 	private static final String HELP = "h";
@@ -20,13 +24,20 @@ public class EmployeePayslip {
 	public static final String DEFAULT_RECORD_SIZE = "6000";
 	public static final String DEFAULT_OUTPUT_FILE = "src/test/resources/outputFile.csv";
 	public static final String DEFAULT_INPUT_FILE = "src/test/resources/inputFile.csv";
-	public static final String USAGE = "Usage: java au.com.myob.payslip.EmployeePayslip";
+	public static final String USAGE = "Usage: java -jar EmployeePayslip-1.0.0-jar-with-dependencies.jar";
 	
 	private String inputFileName;
 	private String outputFileName;
 	private String recordSizeString;
 	private int recordSize;
 	
+	/**
+	 * Constructor
+	 * 
+	 * @param inputFileName the input file name
+	 * @param outputFileName the output file name
+	 * @param recordSize the max record size.
+	 */
 	public EmployeePayslip(final String inputFileName, final String outputFileName, final String recordSize) {
 		this.inputFileName = inputFileName;
 		this.outputFileName = outputFileName;
@@ -39,6 +50,13 @@ public class EmployeePayslip {
 		}
 	}
 	
+	/**
+	 * The method do all work. It will:
+	 * 
+	 * 1. Read the records from input file.
+	 * 2. Perform monthly pay calculation.
+	 * 3. Write the monthly pay record to output file.
+	 */
 	protected void run() {
 		try {
 			List<EmployeeSalaryRecord> inputs = getInputContents();
@@ -50,6 +68,11 @@ public class EmployeePayslip {
 		
 	}
 	
+	/**
+	 * This method writes to the output file with provided pay records.
+	 * @param records the pay records.
+	 * @throws IOException raise when write operation failed.
+	 */
 	protected void writeToFile(List<EmployeeMonthlyPayRecord> records) throws IOException {
 		if (CollectionUtils.isNotEmpty(records)) {
 			OutputWriter writer = new OutputWriter(this.outputFileName);
@@ -57,6 +80,11 @@ public class EmployeePayslip {
 		}
 	}
 
+	/**
+	 * This method performs the monthly pay calcuation from the input records.
+	 * @param inputs the input records from input file.
+	 * @return list of pay records.
+	 */
 	protected List<EmployeeMonthlyPayRecord> doPayCalculation(List<EmployeeSalaryRecord> inputs) {
 		List<EmployeeMonthlyPayRecord> payRecords = new ArrayList<>();
 		if (CollectionUtils.isNotEmpty(inputs)) {
@@ -68,11 +96,29 @@ public class EmployeePayslip {
 		return payRecords;
 	}
 
+	/**
+	 * This method reads the employee salary records from input file.
+	 * @return list of salary records.
+	 * @throws IOException raise when read operation failed.
+	 */
 	protected List<EmployeeSalaryRecord> getInputContents() throws IOException {
 		InputReader inputReader = new InputReader(this.inputFileName, this.recordSize);
 		return inputReader.read();
 	}
 
+	/**
+	 * The entry point for this program.
+	 * 
+	 * @param args parameters user input. It can be as following:
+	 * 			java -jar EmployeePayslip-1.0.0-jar-with-dependencies.jar
+	 * or
+	 * 			java -jar EmployeePayslip-1.0.0-jar-with-dependencies.jar inputFile
+	 * or
+	 * 			java -jar EmployeePayslip-1.0.0-jar-with-dependencies.jar inputFile outputFile
+	 * or
+	 * 			java -jar EmployeePayslip-1.0.0-jar-with-dependencies.jar inputFile outputFile 8000
+	 * 
+	 */
 	public static void main(String[] args) {
 		String inputFileName = DEFAULT_INPUT_FILE;
 		String outputFileName = DEFAULT_OUTPUT_FILE;
