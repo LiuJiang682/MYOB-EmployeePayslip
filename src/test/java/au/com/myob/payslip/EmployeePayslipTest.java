@@ -47,8 +47,9 @@ public class EmployeePayslipTest {
 	private static final String TEST_INPUT_FILE = "abc";
 
 	/**
-	 * Given no input/output files and record size provided When the application
-	 * start Then default parameter will used
+	 * Given no input/output files and record size provided 
+	 * When the application start 
+	 * Then default parameter will used
 	 * 
 	 * @throws Exception
 	 */
@@ -80,8 +81,9 @@ public class EmployeePayslipTest {
 	}
 
 	/**
-	 * Given no input/output files and record size provided When the application
-	 * start Then default parameter will used
+	 * Given no input/output files and record size provided 
+	 * When the application start 
+	 * Then default parameter will used
 	 * 
 	 * @throws Exception
 	 */
@@ -113,8 +115,9 @@ public class EmployeePayslipTest {
 	}
 
 	/**
-	 * Given all input/output files, record size and some rubbish provided When
-	 * the application start Then default parameter will used
+	 * Given all input/output files, record size and some rubbish provided 
+	 * When the application start 
+	 * Then default parameter will used
 	 * 
 	 * @throws Exception
 	 */
@@ -146,8 +149,9 @@ public class EmployeePayslipTest {
 	}
 
 	/**
-	 * Given input files provided When the application start Then default output
-	 * file and record size will used
+	 * Given input files provided 
+	 * When the application start 
+	 * Then default output file and record size will used
 	 * 
 	 * @throws Exception
 	 */
@@ -179,8 +183,9 @@ public class EmployeePayslipTest {
 	}
 
 	/**
-	 * Given input and output files provided When the application start Then
-	 * default record size will used
+	 * Given input and output files provided 
+	 * When the application start 
+	 * Then default record size will used
 	 * 
 	 * @throws Exception
 	 */
@@ -212,8 +217,9 @@ public class EmployeePayslipTest {
 	}
 
 	/**
-	 * Given input, output files and record size provided When the application
-	 * start Then no default record size will used
+	 * Given input, output files and record size provided 
+	 * When the application start 
+	 * Then no default record size will used
 	 * 
 	 * @throws Exception
 	 */
@@ -245,8 +251,9 @@ public class EmployeePayslipTest {
 	}
 
 	/**
-	 * Given parameter h provided When the application start Then usage will
-	 * called
+	 * Given parameter h provided 
+	 * When the application start 
+	 * Then usage will called
 	 * 
 	 * @throws Exception
 	 */
@@ -276,9 +283,9 @@ public class EmployeePayslipTest {
 	}
 
 	/**
-	 * Given all parameters provided but record size is not a number When the
-	 * constructor called Then the object should constructed with default record
-	 * size
+	 * Given all parameters provided but record size is not a number 
+	 * When the constructor called 
+	 * Then the object should constructed with default record size
 	 */
 	@Test
 	public void whenInvalidRecordSizeProvidedThenDefaultSizeShouldReturn() {
@@ -287,8 +294,9 @@ public class EmployeePayslipTest {
 	}
 
 	/**
-	 * Given all parameters provided When the constructor called Then the object
-	 * should constructed with pass in record size
+	 * Given all parameters provided 
+	 * When the constructor called 
+	 * Then the object should constructed with pass in record size
 	 */
 	@Test
 	public void whenValidRecordSizeProvidedThenPassInSizeShouldReturn() {
@@ -297,8 +305,9 @@ public class EmployeePayslipTest {
 	}
 
 	/**
-	 * Given all parameters provided When the getInputContent method called Then
-	 * the content should be read in.
+	 * Given all parameters provided 
+	 * When the getInputContent method called 
+	 * Then the content should be read in.
 	 * 
 	 * @throws IOException
 	 */
@@ -312,7 +321,8 @@ public class EmployeePayslipTest {
 	}
 
 	/**
-	 * Given a list of salary records When the doPayCalculation method called
+	 * Given a list of salary records 
+	 * When the doPayCalculation method called
 	 * Then a list of the monthly pay records should return
 	 */
 	@Test
@@ -331,8 +341,9 @@ public class EmployeePayslipTest {
 	}
 
 	/**
-	 * Given an empty list of salary records When the doPayCalculation method
-	 * called Then an empty list of the monthly pay records should return
+	 * Given an empty list of salary records 
+	 * When the doPayCalculation method called 
+	 * Then an empty list of the monthly pay records should return
 	 */
 	@Test
 	public void whenEmptyListOfSalaryRecordProvidenThenEmptyListPayRecordShouldReturn() {
@@ -347,8 +358,9 @@ public class EmployeePayslipTest {
 	}
 
 	/**
-	 * Given an null list of salary records When the doPayCalculation method
-	 * called Then an empty list of the monthly pay records should return
+	 * Given an null list of salary records 
+	 * When the doPayCalculation method called 
+	 * Then an empty list of the monthly pay records should return
 	 */
 	@Test
 	public void whenNullListOfSalaryRecordProvidenThenEmptyListPayRecordShouldReturn() {
@@ -363,8 +375,9 @@ public class EmployeePayslipTest {
 	}
 
 	/**
-	 * Given a null list of pay records When the writeToFile method called Then
-	 * no write to file
+	 * Given a null list of pay records 
+	 * When the writeToFile method called 
+	 * Then no write to file
 	 * 
 	 * @throws Exception
 	 */
@@ -382,8 +395,9 @@ public class EmployeePayslipTest {
 	}
 
 	/**
-	 * Given a list of pay records When the writeToFile method called Then no
-	 * write to file
+	 * Given a list of pay records 
+	 * When the writeToFile method called 
+	 * Then write to mock file
 	 * 
 	 * @throws Exception
 	 */
@@ -401,8 +415,9 @@ public class EmployeePayslipTest {
 	}
 
 	/**
-	 * Given a list of pay records When the writeToFile method called Then no
-	 * write to file
+	 * Given a list of pay records 
+	 * When the writeToFile method called 
+	 * Then write to file
 	 * 
 	 * @throws Exception
 	 */

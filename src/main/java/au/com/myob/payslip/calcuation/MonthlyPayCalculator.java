@@ -8,6 +8,12 @@ import au.com.myob.payslip.comm.Constants.Numeral;
 import au.com.myob.payslip.model.EmployeeMonthlyPayRecord;
 import au.com.myob.payslip.model.EmployeeSalaryRecord;
 
+/**
+ * The calculator for monthly pay.
+ * 
+ * For detail requirements, please read the README.md
+ *
+ */
 public class MonthlyPayCalculator {
 
 	
@@ -30,7 +36,13 @@ public class MonthlyPayCalculator {
 	private static final int SECOND_LEVEL_START = 18201;
 	private static final int FIRST_LEVEL = 18200;
 
-
+	/**
+	 * The method constructs the pay record via assemble all needed
+	 * information from respected methods.
+	 * 
+	 * @param salaryRecord the salary record.
+	 * @return the pay record.
+	 */
 	public static EmployeeMonthlyPayRecord doCalculation(EmployeeSalaryRecord salaryRecord) {
 		String name = getName(salaryRecord);
 		String grossIncome = getGrossIncome(salaryRecord);
@@ -74,6 +86,19 @@ public class MonthlyPayCalculator {
 		return grossIncome.toString();
 	}
 
+	/**
+	 * This method calculates the income tax according to salary record as follow:
+	 * 
+	 * Taxable income           Tax on this income
+	 *	0 - $18,200             Nil
+	 *	$18,201 - $37,000       19c for each $1 over $18,200
+	 *  $37,001 - $80,000       $3,572 plus 32.5c for each $1 over $37,000
+	 *  $80,001 - $180,000      $17,547 plus 37c for each $1 over $80,000
+	 *  $180,001 and over       $54,547 plus 45c for each $1 over $180,000
+	 *
+	 * @param salaryRecord the salary record.
+	 * @return the income tax for this salary record
+	 */
 	public static String getIncomeTax(EmployeeSalaryRecord salaryRecord) {
 		long incomeTax = 0;
 		long salary = Long.parseLong(salaryRecord.getAnnualSalary());
@@ -94,6 +119,13 @@ public class MonthlyPayCalculator {
 		return String.valueOf(incomeTax);
 	}
 
+	/**
+	 * This method performs income tax calculation for income of
+	 * $37,001 - $80,000
+	 * 
+	 * @param salary the actual salary.
+	 * @return income tax for input salary
+	 */
 	public static long doSecondLevelIncomeTaxCalculation(long salary) {
 		BigDecimal taxable = new BigDecimal(salary - FIRST_LEVEL);
 		BigDecimal totalIncomeTax = taxable.multiply(SECOND_LEVEL_TAX_RATE);
@@ -109,6 +141,13 @@ public class MonthlyPayCalculator {
 		return (THIRD_LEVEL_START <= salary) && (salary <= THIRD_LEVEL_END);
 	}
 
+	/**
+	 * This method performs income tax calculation for income of
+	 * $18,201 - $37,000
+	 * 
+	 * @param salary the actual salary.
+	 * @return income tax for input salary
+	 */
 	public static long doThirdLevelIncomeTaxCalculation(long salary) {
 		BigDecimal taxable = new BigDecimal(salary - SECOND_LEVEL_END);
 		BigDecimal thirdLevelIncomeTax = taxable.multiply(THIRD_LEVEL_TAX_RATE);
@@ -121,6 +160,13 @@ public class MonthlyPayCalculator {
 		return (FOURTH_LEVEL_START <= salary) && (salary <= FOURTH_LEVEL_END);
 	}
 
+	/**
+	 * This method performs income tax calculation for income of
+	 * $80,001 - $180,000
+	 * 
+	 * @param salary the actual salary.
+	 * @return income tax for input salary
+	 */
 	public static long doFourthLevelIncomeTaxCalculation(long salary) {
 		BigDecimal taxable = new BigDecimal(salary - THIRD_LEVEL_END);
 		BigDecimal fourthLevelIncomeTax = taxable.multiply(FOURTH_LEVEL_TAX_RATE);
@@ -129,6 +175,13 @@ public class MonthlyPayCalculator {
 		return incomeTax.longValue();
 	}
 
+	/**
+	 * This method performs income tax calculation for income of
+	 * $180,001 and over
+	 * 
+	 * @param salary the actual salary.
+	 * @return income tax for input salary
+	 */
 	public static long doFifthLevelIncomeTaxCalculation(long salary) {
 		BigDecimal taxable = new BigDecimal(salary - FOURTH_LEVEL_END);
 		BigDecimal fifthLevelIncomeTax = taxable.multiply(FIFTH_LEVEL_TAX_RATE);

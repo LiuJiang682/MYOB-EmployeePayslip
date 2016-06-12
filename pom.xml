@@ -49,6 +49,24 @@
 		<pluginManagement>
 			<plugins>
 				<plugin>
+					<!-- Build an executable JAR -->
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>3.0.0</version>
+					<configuration>
+						<archive>
+							<manifest>
+								<addClasspath>true</addClasspath>
+								<classpathPrefix>lib/</classpathPrefix>
+								<mainClass>au.com.myob.payslip.EmployeePayslip</mainClass>
+							</manifest>
+							<manifestEntries>
+								<Class-Path>.</Class-Path>
+							</manifestEntries>
+						</archive>
+					</configuration>
+				</plugin>
+				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>3.5.1</version>
@@ -56,6 +74,35 @@
 						<source>1.8</source>
 						<target>1.8</target>
 					</configuration>
+				</plugin>
+				<!-- Maven Assembly Plugin -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>2.6</version>
+					<configuration>
+						<!-- get all project dependencies -->
+						<descriptorRefs>
+							<descriptorRef>jar-with-dependencies</descriptorRef>
+						</descriptorRefs>
+						<!-- MainClass in mainfest make a executable jar -->
+						<archive>
+							<manifest>
+								<mainClass>au.com.myob.payslip.EmployeePayslip</mainClass>
+							</manifest>
+						</archive>
+
+					</configuration>
+					<executions>
+						<execution>
+							<id>make-assembly</id>
+							<!-- bind to the packaging phase -->
+							<phase>package</phase>
+							<goals>
+								<goal>single</goal>
+							</goals>
+						</execution>
+					</executions>
 				</plugin>
 			</plugins>
 		</pluginManagement>
